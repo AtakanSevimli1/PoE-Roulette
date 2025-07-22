@@ -29,23 +29,7 @@ main, header, footer, section, article, aside, nav {
     border: 0 !important;
 }
 
-/* Skip link for keyboard users */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 6px;
-    background: var(--poe-gold);
-    color: var(--poe-dark);
-    padding: 8px;
-    text-decoration: none;
-    border-radius: 3px;
-    z-index: 10000;
-    font-weight: bold;
-}
 
-.skip-link:focus {
-    top: 6px;
-}
 
 /* Improved focus indicators */
 *:focus {
