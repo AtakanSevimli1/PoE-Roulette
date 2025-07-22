@@ -16,6 +16,9 @@ class SkillDataService {
         // Process and validate the data
         this.processedData = this.rawData.map(skill => this.validateSkill(skill));
         
+        // Initialize the random selector
+        this.initializeRandomSelector();
+        
         console.log(`Initialized SkillDataService with ${this.processedData.length} skills`);
     }
     
@@ -74,12 +77,38 @@ class SkillDataService {
         );
     }
     
-    // Get random skill
+    // Initialize random selector
+    initializeRandomSelector() {
+        if (typeof RandomSelector !== 'undefined') {
+            this.randomSelector = new RandomSelector(this.processedData);
+        } else {
+            console.warn('RandomSelector not available, using fallback random selection');
+            this.randomSelector = null;
+        }
+    }
+    
+    // Get random skill using the enhanced random selector
     getRandomSkill(excludeList = []) {
         if (this.processedData.length === 0) {
             throw new Error('No skill data available');
         }
         
+        // Initialize random selector if not already done
+        if (!this.randomSelector && typeof RandomSelector !== 'undefined') {
+            this.initializeRandomSelector();
+        }
+        
+        // Use enhanced random selector if available
+        if (this.randomSelector) {
+            try {
+                return this.randomSelector.selectRandomSkill(true);
+            } catch (error) {
+                console.warn('Random selector failed, using fallback:', error);
+                // Fall through to fallback method
+            }
+        }
+        
+        // Fallback method (original implementation)
         // If exclude list is too large, just return any random skill
         if (excludeList.length >= this.processedData.length - 1) {
             const randomIndex = Math.floor(Math.random() * this.processedData.length);
@@ -126,4 +155,16 @@ class SkillDataService {
             skill && skill.name.toLowerCase().includes(normalizedQuery)
         );
     }
+}
+
+// Export for use in other modules (Node.js)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = SkillDataService;
+}
+
+// Make available globally (Browser)
+if (typeof window !== 'undefined') {
+    window.SkillDataService = SkillDataService;
+} else if (typeof global !== 'undefined') {
+    global.SkillDataService = SkillDataService;
 }

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Selector Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .pass { background-color: #d4edda; color: #155724; }
+        .fail { background-color: #f8d7da; color: #721c24; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Random Selector Test Page</h1>
+    
+    <div>
+        <button onclick="runBasicTest()">Run Basic Test</button>
+        <button onclick="runRandomnessTest()">Run Randomness Test</button>
+        <button onclick="runRepeatTest()">Run Repeat Avoidance Test</button>
+        <button onclick="runAllTests()">Run All Tests</button>
+    </div>
+    
+    <div id="test-results"></div>
+    
+    <div>
+        <h2>Manual Test</h2>
+        <button onclick="generateSkill()">Generate Random Skill</button>
+        <div id="skill-result"></div>
+    </div>
+    
+    <script src="js/skills-data.js"></script>
+    <script src="js/random-selector.js"></script>
+    <script src="js/tests.js"></script>
+    
+    <script>
+        let selector;
+        
+        function initSelector() {
+            if (!selector) {
+                selector = new RandomSelector(skillsData);
+            }
+        }
+        
+        function addResult(message, isPass) {
+            const div = document.createElement('div');
+            div.className = `test-result ${isPass ? 'pass' : 'fail'}`;
+            div.textContent = message;
+            document.getElementById('test-results').appendChild(div);
+        }
+        
+        function runBasicTest() {
+            initSelector();
+            try {
+                const skill = selector.selectRandomSkill();
+                addResult(`Basic test passed: Selected ${skill.name}`, true);
+            } catch (error) {
+                addResult(`Basic test failed: ${error.message}`, false);
+            }
+        }
+        
+        function runRandomnessTest() {
+            initSelector();
+            try {
+                const stats = selector.testRandomness(1000);
+                const message = `Randomness test: ${stats.isReasonablyRandom ? 'PASS' : 'FAIL'} (std dev: ${stats.standardDeviation.toFixed(2)})`;
+                addResult(message, stats.isReasonablyRandom);
+            } catch (error) {
+                addResult(`Randomness test failed: ${error.message}`, false);
+            }
+        }
+        
+        function runRepeatTest() {
+            initSelector();
+            try {
+                const sequence = [];
+                for (let i = 0; i < 50; i++) {
+                    const skill = selector.selectRandomSkill(true);
+                    sequence.push(skill.name);
+                }
+                
+                let immediateRepeats = 0;
+                for (let i = 1; i < sequence.length; i++) {
+                    if (sequence[i] === sequence[i-1]) {
+                        immediateRepeats++;
+                    }
+                }
+                
+                const repeatRate = (immediateRepeats / (sequence.length - 1)) * 100;
+                const message = `Repeat avoidance test: ${repeatRate < 5 ? 'PASS' : 'FAIL'} (${immediateRepeats} immediate repeats, ${repeatRate.toFixed(1)}%)`;
+                addResult(message, repeatRate < 5);
+            } catch (error) {
+                addResult(`Repeat test failed: ${error.message}`, false);
+            }
+        }
+        
+        function runAllTests() {
+            document.getElementById('test-results').innerHTML = '';
+            runBasicTest();
+            runRandomnessTest();
+            runRepeatTest();
+            
+            // Run the comprehensive test suite
+            try {
+                const testSuite = new RandomSelectorTests();
+                const allPassed = testSuite.runAllTests();
+                addResult(`Comprehensive test suite: ${allPassed ? 'ALL PASSED' : 'SOME FAILED'}`, allPassed);
+            } catch (error) {
+                addResult(`Test suite failed: ${error.message}`, false);
+            }
+        }
+        
+        function generateSkill() {
+            initSelector();
+            try {
+                const skill = selector.selectRandomSkill();
+                const resultDiv = document.getElementById('skill-result');
+                resultDiv.innerHTML = `
+                    <h3>${skill.name}</h3>
+                    ${skill.type ? `<p>Type: ${skill.type}</p>` : ''}
+                    ${skill.color ? `<p>Color: ${skill.color}</p>` : ''}
+                    ${skill.description ? `<p>Description: ${skill.description}</p>` : ''}
+                `;
+            } catch (error) {
+                document.getElementById('skill-result').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

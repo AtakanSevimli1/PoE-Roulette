@@ -39,30 +39,78 @@ document.addEventListener('DOMContentLoaded', () => {
         
         setLoading(true);
         
-        // Simulate a small delay for better UX
-        setTimeout(() => {
-            try {
-                generateRandomSkill();
-            } catch (error) {
-                handleError(error);
-            } finally {
-                setLoading(false);
-            }
-        }, 300);
+        // Add generating animation to skill display if it exists
+        if (!skillDisplay.classList.contains('hidden')) {
+            skillDisplay.classList.add('generating');
+            
+            // Add slide-out animation before generating new skill
+            skillDisplay.classList.add('skill-animation-out');
+            
+            setTimeout(() => {
+                try {
+                    generateRandomSkill();
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setLoading(false);
+                    skillDisplay.classList.remove('generating', 'skill-animation-out');
+                }
+            }, 400); // Slightly longer delay for better animation
+        } else {
+            // No existing skill display, generate immediately
+            setTimeout(() => {
+                try {
+                    generateRandomSkill();
+                } catch (error) {
+                    handleError(error);
+                } finally {
+                    setLoading(false);
+                }
+            }, 300);
+        }
     }
     
-    // Set loading state
+    // Set loading state with enhanced animations
     function setLoading(isLoading) {
         state.isLoading = isLoading;
         
         if (isLoading) {
             generateBtn.classList.add('loading');
             generateBtn.setAttribute('disabled', 'disabled');
-            generateBtn.innerHTML = 'Generating<span class="loading-dots">...</span>';
+            generateBtn.setAttribute('aria-busy', 'true');
+            generateBtn.innerHTML = 'Generating<span class="loading-dots"></span>';
+            
+            // Add loading spinner to skill display if it's visible
+            if (!skillDisplay.classList.contains('hidden')) {
+                showLoadingSpinner();
+            }
         } else {
             generateBtn.classList.remove('loading');
             generateBtn.removeAttribute('disabled');
+            generateBtn.removeAttribute('aria-busy');
             generateBtn.textContent = 'Generate Random Skill';
+            
+            // Remove loading spinner
+            hideLoadingSpinner();
+        }
+    }
+    
+    // Show loading spinner in skill display
+    function showLoadingSpinner() {
+        const existingSpinner = skillDisplay.querySelector('.skill-loading');
+        if (!existingSpinner) {
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'skill-loading';
+            loadingDiv.innerHTML = '<div class="spinner" aria-label="Loading new skill"></div>';
+            skillDisplay.appendChild(loadingDiv);
+        }
+    }
+    
+    // Hide loading spinner
+    function hideLoadingSpinner() {
+        const spinner = skillDisplay.querySelector('.skill-loading');
+        if (spinner) {
+            spinner.remove();
         }
     }
     
@@ -110,11 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 skillDisplay.classList.remove('hidden');
             }
             
-            // Add animation effect
-            skillDisplay.classList.add('skill-animation');
-            setTimeout(() => {
-                skillDisplay.classList.remove('skill-animation');
-            }, 500);
+            // Add enhanced animation effect with performance optimization
+            smoothAnimation(() => {
+                skillDisplay.classList.add('skill-animation');
+                setTimeout(() => {
+                    skillDisplay.classList.remove('skill-animation');
+                }, 600); // Match CSS animation duration
+            });
             
             // Mark as initialized
             if (!state.initialized) {
@@ -264,8 +314,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return array;
     }
     
+    // Check for reduced motion preference and adjust animations
+    function setupAccessibilityPreferences() {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        
+        function handleReducedMotion(e) {
+            if (e.matches) {
+                document.body.classList.add('reduced-motion');
+            } else {
+                document.body.classList.remove('reduced-motion');
+            }
+        }
+        
+        // Set initial state
+        handleReducedMotion(prefersReducedMotion);
+        
+        // Listen for changes
+        prefersReducedMotion.addEventListener('change', handleReducedMotion);
+    }
+    
+    // Performance optimization: Use requestAnimationFrame for smooth animations
+    function smoothAnimation(callback) {
+        if (window.requestAnimationFrame) {
+            requestAnimationFrame(callback);
+        } else {
+            // Fallback for older browsers
+            setTimeout(callback, 16); // ~60fps
+        }
+    }
+    
     // Initialize the application
     function init() {
+        // Set up accessibility preferences
+        setupAccessibilityPreferences();
+        
         // Try to load previous state
         loadFromLocalStorage();
         
