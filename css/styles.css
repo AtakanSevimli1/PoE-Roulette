@@ -1,0 +1,355 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Accessibility */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Global Variables */
+:root {
+    --poe-dark: #1a1a1a;
+    --poe-gold: #c7a758;
+    --poe-red: #8a0303;
+    --poe-text: #e0e0e0;
+    --poe-bg: #0a0a0a;
+    --poe-panel: #252525;
+}
+
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--poe-bg);
+    color: var(--poe-text);
+    line-height: 1.6;
+    background-image: url('../assets/bg-texture.png');
+    background-repeat: repeat;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-weight: bold;
+    color: var(--poe-gold);
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+a {
+    color: var(--poe-gold);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #e0c080;
+    text-decoration: underline;
+}
+
+/* Layout Components */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    border-bottom: 1px solid var(--poe-gold);
+}
+
+header p {
+    color: var(--poe-text);
+    font-size: 1.2rem;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--poe-gold);
+    color: #888;
+}
+
+/* Generator Section */
+.generator-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    background-color: var(--poe-panel);
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+}
+
+/* Button Styles */
+.poe-button {
+    background-color: var(--poe-red);
+    color: var(--poe-text);
+    border: 2px solid var(--poe-gold);
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.poe-button:hover {
+    background-color: #a00404;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+}
+
+.poe-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.poe-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(199, 167, 88, 0.5), 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Button ripple effect */
+.poe-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.poe-button:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    20% {
+        transform: scale(25, 25);
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(40, 40);
+    }
+}
+
+/* Loading state */
+.poe-button.loading {
+    cursor: wait;
+    opacity: 0.8;
+}
+
+.loading-dots {
+    display: inline-block;
+    width: 20px;
+    text-align: left;
+    animation: loading-dots 1.5s infinite;
+}
+
+@keyframes loading-dots {
+    0% { content: "."; }
+    33% { content: ".."; }
+    66% { content: "..."; }
+    100% { content: "."; }
+}
+
+/* Skill Display */
+.skill-display {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(26, 26, 26, 0.8);
+    border: 1px solid var(--poe-gold);
+    border-radius: 5px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.skill-display::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../assets/skill-bg.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: -1;
+    border-radius: 4px;
+}
+
+.skill-display.hidden {
+    display: none;
+}
+
+.skill-display h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    color: var(--poe-gold);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.skill-display h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--poe-gold), transparent);
+}
+
+#skill-details {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+#skill-details p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+#skill-type, #skill-color {
+    display: inline-block;
+    margin: 0 10px 10px 10px;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+#skill-type {
+    border-left: 3px solid var(--poe-red);
+}
+
+#skill-color {
+    border-left: 3px solid var(--poe-gold);
+}
+
+#skill-description {
+    font-style: italic;
+    color: #ccc;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(199, 167, 88, 0.3);
+}
+
+/* Animation for skill display */
+@keyframes skill-fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.skill-animation {
+    animation: skill-fade-in 0.5s ease-out;
+}
+
+/* Gem color indicators */
+.gem-red {
+    color: #ff6666;
+}
+
+.gem-green {
+    color: #66ff66;
+}
+
+.gem-blue {
+    color: #6666ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .generator-section {
+        padding: 20px;
+    }
+    
+    .poe-button {
+        padding: 12px 24px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .poe-button {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+    
+    .skill-display h2 {
+        font-size: 1.8rem;
+    }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path of Exile Random Skill Selector</title>
+    <meta name="description" content="Randomly select a Path of Exile skill gem to try new builds and gameplay styles.">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta property="og:title" content="Path of Exile Random Skill Selector">
+    <meta property="og:description" content="Discover new builds by trying random skill gems in Path of Exile.">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container" role="document">
+        <header role="banner">
+            <h1>Path of Exile Random Skill Selector</h1>
+            <p>Discover new builds by trying random skill gems</p>
+        </header>
+        
+        <main role="main">
+            <section class="generator-section" aria-labelledby="generator-heading">
+                <h2 id="generator-heading" class="visually-hidden">Skill Generator</h2>
+                
+                <button id="generate-btn" class="poe-button" aria-label="Generate Random Skill">
+                    Generate Random Skill
+                </button>
+                
+                <div id="skill-display" class="skill-display hidden" aria-live="polite" aria-atomic="true">
+                    <h2 id="skill-name" tabindex="-1"></h2>
+                    <div id="skill-details">
+                        <p id="skill-type"></p>
+                        <p id="skill-color"></p>
+                        <p id="skill-description"></p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="info-section">
+                <h2>About This Tool</h2>
+                <p>This tool helps Path of Exile players discover new gameplay styles by randomly selecting skill gems to build around. Break out of the meta and try something new!</p>
+                <p>Simply click the button above to get a random skill gem suggestion.</p>
+            </section>
+        </main>
+        
+        <footer role="contentinfo">
+            <p>This is a fan-made tool and is not affiliated with Grinding Gear Games.</p>
+            <p>Path of Exile is a registered trademark of Grinding Gear Games.</p>
+            <p><a href="https://github.com/yourusername/poe-random-skill-selector" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
+        </footer>
+    </div>
+    
+    <!-- Add keyboard shortcut support -->
+    <div id="keyboard-shortcuts" class="visually-hidden">
+        <p>Press the spacebar to generate a new random skill.</p>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/skills-data.js"></script>
+    <script src="js/data-service.js"></script>
+    <script src="js/app.js"></script>
+    <!-- Uncomment for testing -->
+    <!-- <script src="js/tests.js"></script> -->
+</body>
+</html>
