@@ -404,6 +404,25 @@ footer {
     position: relative;
 }
 
+.skill-display h2 a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.skill-display h2 a:hover {
+    color: #e0c080;
+    text-shadow: 0 2px 8px rgba(224, 192, 128, 0.4);
+    transform: translateY(-1px);
+}
+
+.skill-display h2 a:focus {
+    outline: 2px solid var(--poe-gold);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
 .skill-display h2::after {
     content: '';
     position: absolute;

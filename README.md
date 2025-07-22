@@ -1,4 +1,4 @@
-# Path of Exile Random Skill Selector
+# PoE Roulette
 
 A simple web application that randomly selects a skill gem from Path of Exile to encourage players to try new builds and gameplay styles beyond the meta.
 
@@ -11,7 +11,7 @@ A simple web application that randomly selects a skill gem from Path of Exile to
 
 ## How to Use
 
-1. Visit the [Path of Exile Random Skill Selector](https://yourusername.github.io/poe-random-skill-selector/)
+1. Visit the [PoE Roulette](https://atakansevimli1.github.io/PoE-Roulette/)
 2. Click the "Generate Random Skill" button
 3. Get a random skill gem suggestion
 4. Try building a character around that skill!

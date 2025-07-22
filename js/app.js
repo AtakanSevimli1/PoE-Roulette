@@ -217,7 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update the UI with the selected skill
     function updateSkillDisplay(skill) {
-        skillName.textContent = skill.name;
+        // Create PoE Wiki URL (replace spaces with underscores)
+        const wikiUrl = `https://www.poewiki.net/wiki/${skill.name.replace(/\s+/g, '_')}`;
+
+        // Create clickable link for skill name
+        skillName.innerHTML = `<a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" aria-label="View ${skill.name} on PoE Wiki">${skill.name}</a>`;
 
         // Reset any previous color classes
         skillName.className = '';
@@ -253,11 +257,14 @@ document.addEventListener('DOMContentLoaded', () => {
             skillDescription.style.display = 'none';
         }
 
-        // Set focus to the skill name for accessibility
-        skillName.focus();
+        // Set focus to the skill name link for accessibility
+        const skillLink = skillName.querySelector('a');
+        if (skillLink) {
+            skillLink.focus();
+        }
 
         // Update page title with the skill name
-        document.title = `${skill.name} - Path of Exile Random Skill Selector`;
+        document.title = `${skill.name} - PoE Roulette`;
     }
 
     // Save state to local storage
