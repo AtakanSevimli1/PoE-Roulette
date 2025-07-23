@@ -133,12 +133,6 @@ const skillsData = [
         description: "Throws a chain that pulls you to the enemy and performs a melee attack."
     },
     {
-        name: "Charged Dash",
-        type: "Attack, AoE, Movement, Lightning, Melee",
-        color: "Red",
-        description: "Charges up while moving, then releases lightning damage in an area."
-    },
-    {
         name: "Cleave",
         type: "Attack, AoE, Melee",
         color: "Red",
@@ -355,12 +349,6 @@ const skillsData = [
         description: "Calls down a storm of fire that rains down in an area."
     },
     {
-        name: "Flame Dash",
-        type: "Spell, Movement, Fire",
-        color: "Blue",
-        description: "Teleports through flames, dealing fire damage at the destination."
-    },
-    {
         name: "Flame Surge",
         type: "Spell, AoE, Fire",
         color: "Blue",
@@ -413,12 +401,6 @@ const skillsData = [
         type: "Spell, AoE, Cold",
         color: "Blue",
         description: "Creates a crystal that explodes after a delay, dealing cold damage."
-    },
-    {
-        name: "Frostblink",
-        type: "Spell, Movement, Cold",
-        color: "Blue",
-        description: "Teleports to a location, dealing cold damage at origin and destination."
     },
     {
         name: "Frostbolt",
@@ -551,12 +533,6 @@ const skillsData = [
         type: "Attack, Projectile, Physical",
         color: "Green",
         description: "Fires steel shards that impale enemies and can be called back."
-    },
-    {
-        name: "Leap Slam",
-        type: "Attack, AoE, Movement, Melee, Slam",
-        color: "Red",
-        description: "Leaps to a location and slams down, dealing damage in an area."
     },
     {
         name: "Lightning Arrow",
@@ -745,12 +721,6 @@ const skillsData = [
         description: "Fires steel projectiles that shatter when hitting terrain."
     },
     {
-        name: "Shield Charge",
-        type: "Attack, AoE, Movement, Physical, Melee",
-        color: "Red",
-        description: "Charges forward with a shield, dealing damage based on distance traveled."
-    },
-    {
         name: "Shield Crush",
         type: "Attack, AoE, Physical, Melee",
         color: "Red",
@@ -791,12 +761,6 @@ const skillsData = [
         type: "Attack, AoE, Lightning, Melee, Strike",
         color: "Red",
         description: "Attacks enemies, calling down lightning on nearby foes."
-    },
-    {
-        name: "Smoke Mine",
-        type: "Mine, Spell, AoE, Movement",
-        color: "Green",
-        description: "Throws a mine that creates a smoke cloud and teleports you to it."
     },
     {
         name: "Snipe",
@@ -1043,12 +1007,6 @@ const skillsData = [
         type: "Spell, AoE, Fire, Lightning, Physical",
         color: "Blue",
         description: "Deals fire, lightning, and physical damage while exposing enemy resistances."
-    },
-    {
-        name: "Whirling Blades",
-        type: "Attack, Movement, Melee",
-        color: "Green",
-        description: "Moves through enemies while attacking with melee weapons."
     },
     {
         name: "Wild Strike",
